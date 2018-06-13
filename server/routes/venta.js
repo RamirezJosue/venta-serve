@@ -1,17 +1,17 @@
-var express = require('express');
+const express = require('express');
 
-var mdAutenticacion = require('../middlewares/autenticacion');
+let mdAutenticacion = require('../middlewares/autenticacion');
 
-var app = express();
+let app = express();
 
-var Venta = require('../models/venta');
+let Venta = require('../models/venta');
 
 // ==========================================
 // Obtener todos los ventas
 // ==========================================
 app.get('/venta', (req, res, next) => {
 
-    var desde = req.query.desde || 0;
+    let desde = req.query.desde || 0;
     desde = Number(desde);
 
     Venta.find({})
@@ -48,8 +48,8 @@ app.get('/venta', (req, res, next) => {
 // ==========================================
 app.put('/venta/:id', mdAutenticacion.verificaToken, (req, res) => {
 
-    var id = req.params.id;
-    var body = req.body;
+    let id = req.params.id;
+    let body = req.body;
 
     Venta.findById(id, (err, venta) => {
 
@@ -110,9 +110,9 @@ app.put('/venta/:id', mdAutenticacion.verificaToken, (req, res) => {
 // ==========================================
 app.post('/venta', mdAutenticacion.verificaToken, (req, res) => {
 
-    var body = req.body;
+    let body = req.body;
 
-    var venta = new Venta({
+    let venta = new Venta({
         tipoComprobante: body.tipoComprobante,
         serieComprobante: body.serieComprobante,
         numComprobante: body.numComprobante,
@@ -150,7 +150,7 @@ app.post('/venta', mdAutenticacion.verificaToken, (req, res) => {
 // ============================================
 app.delete('/venta/:id', mdAutenticacion.verificaToken, (req, res) => {
 
-    var id = req.params.id;
+    let id = req.params.id;
 
     Venta.findByIdAndRemove(id, (err, ventaBorrado) => {
 
