@@ -11,7 +11,7 @@ const Usuario = require('../models/usuario');
 // ==========================================
 // Obtener todos los usuarios
 // ==========================================
-app.get('/usuario', (req, res) => {
+app.get('/usuario', mdAutenticacion.verificaToken, (req, res) => {
 
 
     let desde = req.query.desde || 0;
@@ -50,7 +50,7 @@ app.get('/usuario', (req, res) => {
 // Crear un nuevo usuario
 // ==========================================
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario', mdAutenticacion.verificaToken, (req, res) => {
 
     let body = req.body;
 
@@ -89,7 +89,7 @@ app.post('/usuario', (req, res) => {
 // Actualizar usuario
 // ==========================================
 
-app.put('/usuario/:id', (req, res) => {
+app.put('/usuario/:id', mdAutenticacion.verificaToken, (req, res) => {
 
     let id = req.params.id;
     let body = req.body;
@@ -145,7 +145,7 @@ app.put('/usuario/:id', (req, res) => {
 //   Borrar un usuario por el id
 // ============================================
 
-app.delete('/usuario/:id', (req, res) => {
+app.delete('/usuario/:id', mdAutenticacion.verificaToken, (req, res) => {
 
     let id = req.params.id;
 
