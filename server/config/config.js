@@ -18,6 +18,6 @@ let urlDB;
 if (process.env.NODE_ENV === 'dev') {
     urlDB = 'mongodb://localhost:27017/venta';
 } else {
-    urlDB = 'mongodb://venta:963518495ramirez@ds213209.mlab.com:13209/venta';
+    urlDB = 'mongodb://venta-user:963518495ramirez@ds257640.mlab.com:57640/venta';
 }
 process.env.URLDB = urlDB;
