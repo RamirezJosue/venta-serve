@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
 
-var ventaSchema = new Schema({
+let ventaSchema = new Schema({
     tipoComprobante: { type: String, required: [true, 'Tipo de combrobante es necesario'] },
     serieComprobante: { type: String, required: [true, 'Serie de comprobante es necesario'] },
     numComprobante: { type: String, required: [true, 'Numero de comprobante es necesario'] },

@@ -1,8 +1,8 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+const mongoose = require('mongoose');
+let Schema = mongoose.Schema;
 
 
-var articuloSchema = new Schema({
+let articuloSchema = new Schema({
     codigo: { type: String, required: false },
     nombre: { type: String, required: false },
     stock: { type: Number, required: [true, 'El stock es necesario'] },
