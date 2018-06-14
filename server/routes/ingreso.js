@@ -17,8 +17,8 @@ app.get('/ingreso', (req, res, next) => {
     Ingreso.find({})
         .skip(desde)
         .limit(5)
-        .populate('venta')
-        .populate('articulo')
+        .populate('usuario')
+        .populate('proveedor')
         .exec(
             (err, ingresos) => {
                 if (err) {
