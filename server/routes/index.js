@@ -8,6 +8,7 @@ app.use(require('./categoria'));
 app.use(require('./articulo'));
 app.use(require('./venta'));
 app.use(require('./ingreso'));
+app.use(require('./detalleVenta'));
 app.use(require('./login'));
 
 
