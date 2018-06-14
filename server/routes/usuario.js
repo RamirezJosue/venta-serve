@@ -50,7 +50,7 @@ app.get('/usuario', (req, res) => {
 // Crear un nuevo usuario
 // ==========================================
 
-app.post('/usuario', (req, res) => {
+app.post('/usuario', mdAutenticacion.verificaToken, (req, res) => {
 
     let body = req.body;
 
