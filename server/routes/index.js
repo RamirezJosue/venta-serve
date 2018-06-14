@@ -11,6 +11,7 @@ app.use(require('./ingreso'));
 app.use(require('./detalleVenta'));
 app.use(require('./detalleIngreso'));
 app.use(require('./busqueda'));
+app.use(require('./upload'));
 app.use(require('./login'));
 
 

@@ -12,7 +12,7 @@ const Articulo = require('../models/articulo');
 app.use(fileUpload());
 
 // Rutas
-app.put('/:tipo/:id', (req, res, next) => {
+app.put('/upload/:tipo/:id', (req, res, next) => {
 
     let tipo = req.params.tipo;
     let id = req.params.id;
