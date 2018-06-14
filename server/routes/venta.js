@@ -77,8 +77,6 @@ app.put('/venta/:id', mdAutenticacion.verificaToken, (req, res) => {
         venta.impuesto = body.impuesto;
         venta.totalVenta = body.totalVenta;
         venta.estado = body.estado;
-        venta.usuario = req.usuario._id;
-        venta.cliente = body.cliente;
 
 
         venta.save((err, ventaGuardado) => {

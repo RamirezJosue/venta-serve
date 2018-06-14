@@ -9,7 +9,7 @@ let ventaSchema = new Schema({
     fechaHora: { type: Date, required: true, default: Date.now },
     impuesto: { type: Number, required: [true, 'Impuesto es necesario'] },
     totalVenta: { type: Number, required: [true, 'Total venta es necesario'] },
-    estado: { type: String, required: [true, 'Estado es necesario'] },
+    estado: { type: Boolean, default: true },
     usuario: { type: Schema.Types.ObjectId, ref: 'Usuario', required: true },
     cliente: { type: Schema.Types.ObjectId, ref: 'Persona', required: [true, 'El	id	persona	es	un	campo	obligatorio'] }
 });

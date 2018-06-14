@@ -71,8 +71,6 @@ app.put('/detalleVenta/:id', mdAutenticacion.verificaToken, (req, res) => {
         detalleVenta.cantidad = body.cantidad;
         detalleVenta.precioVenta = body.precioVenta;
         detalleVenta.descuento = body.descuento;
-        detalleVenta.venta = body.venta;
-        detalleVenta.articulo = body.articulo;
 
         detalleVenta.save((err, detalleVentaGuardado) => {
 

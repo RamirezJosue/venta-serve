@@ -68,12 +68,12 @@ app.put('/ingreso/:id', mdAutenticacion.verificaToken, (req, res) => {
         }
 
 
-        ingreso.cantidad = body.cantidad;
-        ingreso.precioVenta = body.precioVenta;
-        ingreso.descuento = body.descuento;
-        ingreso.ingreso = body.ingreso;
-        ingreso.venta = body.venta;
-        ingreso.articulo = body.articulo;
+        ingreso.tipoComprobante = body.tipoComprobante;
+        ingreso.serieComprobante = body.serieComprobante;
+        ingreso.numComprobante = body.numComprobante;
+        ingreso.impuesto = body.impuesto;
+        ingreso.totalCompra = body.totalCompra;
+        ingreso.estado = body.estado;
 
 
         ingreso.save((err, ingresoGuardado) => {
@@ -108,12 +108,15 @@ app.post('/ingreso', mdAutenticacion.verificaToken, (req, res) => {
     let body = req.body;
 
     let ingreso = new Ingreso({
-        cantidad: body.cantidad,
-        precioVenta: body.precioVenta,
-        descuento: body.descuento,
-        ingreso: body.ingreso,
-        venta: body.venta,
-        articulo: body.articulo
+        tipoComprobante: body.tipoComprobante,
+        serieComprobante: body.serieComprobante,
+        numComprobante: body.numComprobante,
+        fechaHora: body.fechaHora,
+        impuesto: body.impuesto,
+        totalCompra: body.totalCompra,
+        estado: body.estado,
+        usuario: req.usuario._id,
+        proveedor: body.proveedor
     });
 
     ingreso.save((err, ingresoGuardado) => {

@@ -70,7 +70,6 @@ app.put('/articulo/:id', mdAutenticacion.verificaToken, (req, res) => {
         articulo.nombre = body.nombre;
         articulo.stock = body.stock;
         articulo.descripcion = body.descripcion;
-        articulo.categoria = body.categoria;
 
 
         articulo.save((err, articuloGuardado) => {
