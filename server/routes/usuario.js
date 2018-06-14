@@ -11,13 +11,13 @@ const Usuario = require('../models/usuario');
 // ==========================================
 // Obtener todos los usuarios
 // ==========================================
-app.get('/usuario', (req, res) => {
+app.get('/usuario', (req, res, next) => {
 
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
-    Usuario.find({ estado: true }, 'nombre email img')
+    Usuario.find({ estado: true }, 'nombre email img role')
         .skip(desde)
         .limit(5)
         .exec((err, usuarios) => {
