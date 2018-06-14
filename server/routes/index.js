@@ -10,6 +10,7 @@ app.use(require('./venta'));
 app.use(require('./ingreso'));
 app.use(require('./detalleVenta'));
 app.use(require('./detalleIngreso'));
+app.use(require('./busqueda'));
 app.use(require('./login'));
 
 
