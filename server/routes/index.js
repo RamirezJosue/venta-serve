@@ -14,7 +14,9 @@ app.use(require('./depositoVenta'));
 app.use(require('./depositoCompra'));
 app.use(require('./busqueda'));
 app.use(require('./upload'));
+app.use(require('./imagenes'));
 app.use(require('./login'));
+
 
 
 

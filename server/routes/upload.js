@@ -1,128 +1,186 @@
 const express = require('express');
-
 const fileUpload = require('express-fileupload');
-const fs = require('fs');
-
 const app = express();
 
 const Usuario = require('../models/usuario');
 const Articulo = require('../models/articulo');
 
+const fs = require('fs');
+const path = require('path');
+
+
 // default options
 app.use(fileUpload());
 
-// Rutas
-app.put('/upload/:tipo/:id', (req, res, next) => {
+
+app.put('/upload/:tipo/:id', function(req, res) {
 
     let tipo = req.params.tipo;
     let id = req.params.id;
 
-    // tipos de  coleccion
+    if (!req.files) {
+        return res.status(400)
+            .json({
+                ok: false,
+                err: {
+                    message: 'No se ha seleccionado ningún archivo'
+                }
+            });
+    }
+
+    // Valida tipo
     let tiposValidos = ['articulos', 'usuarios'];
     if (tiposValidos.indexOf(tipo) < 0) {
         return res.status(400).json({
             ok: false,
-            mensaje: 'Tipo de coleccion no es valido',
-            errors: { message: 'Tipo de coleccion no es valido' }
-        });
+            err: {
+                message: 'Los tipos permitidas son ' + tiposValidos.join(', ')
+            }
+        })
     }
 
-    if (!req.files) {
-        return res.status(400).json({
-            ok: false,
-            mensaje: 'No selecciono nada',
-            errors: { message: 'Debe de seleccionar una imagen' }
-        });
-    }
-
-    // Obtener nombre del archivo
-    let archivo = req.files.imagen;
+    let archivo = req.files.archivo;
     let nombreCortado = archivo.name.split('.');
-    let extensionArchivo = nombreCortado[nombreCortado.length - 1];
+    let extension = nombreCortado[nombreCortado.length - 1];
 
-    // Solo estas extensiones aceptamos
-    let extencionesValidas = ['png', 'jpg', 'gif', 'jpeg'];
+    // Extensiones permitidas
+    let extensionesValidas = ['png', 'jpg', 'gif', 'jpeg'];
 
-    if (extencionesValidas.indexOf(extensionArchivo) < 0) {
+    if (extensionesValidas.indexOf(extension) < 0) {
         return res.status(400).json({
             ok: false,
-            mensaje: 'Extension no valida',
-            errors: { message: 'Las extensiones validas son ' + extencionesValidas.join(', ') }
-        });
+            err: {
+                message: 'Las extensiones permitidas son ' + extensionesValidas.join(', '),
+                ext: extension
+            }
+        })
     }
 
-    // Nombre de archivo personalizado
+    // Cambiar nombre al archivo
+    // 183912kuasidauso-123.jpg
+    let nombreArchivo = `${ id }-${ new Date().getMilliseconds()  }.${ extension }`;
 
-    let nombreArchivo = `${ id }-${ new Date().getMilliseconds()}.${extensionArchivo}`;
 
-    // Mover el archivo del temporal a un path
-    let path = `./uploads/${ tipo }/${ nombreArchivo }`;
+    archivo.mv(`uploads/${ tipo }/${ nombreArchivo }`, (err) => {
 
-    archivo.mv(path, err => {
-        if (err) {
+        if (err)
             return res.status(500).json({
                 ok: false,
-                mensaje: 'Error al mover archivo',
-                errors: err
+                err
             });
+
+        // Aqui, imagen cargada
+        if (tipo === 'usuarios') {
+            imagenUsuario(id, res, nombreArchivo);
+        } else {
+            imagenArticulo(id, res, nombreArchivo);
         }
 
-        subirPorTipo(tipo, id, nombreArchivo, res);
     });
-
 
 });
 
-function subirPorTipo(tipo, id, nombreArchivo, res) {
+function imagenUsuario(id, res, nombreArchivo) {
 
-    if (tipo === 'usuarios') {
+    Usuario.findById(id, (err, usuarioDB) => {
 
-        Usuario.findById(id, (err, usuario) => {
-            let pathViejo = './uploads/usuarios/' + usuario.img;
+        if (err) {
+            borraArchivo(nombreArchivo, 'usuarios');
 
-            // Si existe, elimina la imagen anterior
-            if (fs.existsSync(pathViejo)) {
-                fs.unlink(pathViejo);
-            }
+            return res.status(500).json({
+                ok: false,
+                err
+            });
+        }
 
-            usuario.img = nombreArchivo;
+        if (!usuarioDB) {
 
-            usuario.save((err, usuarioActualizado) => {
+            borraArchivo(nombreArchivo, 'usuarios');
 
-                usuarioActualizado.password = ':)';
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Usuario no existe'
+                }
+            });
+        }
 
-                return res.status(200).json({
-                    ok: true,
-                    mensaje: 'Imagen de usuario actualizado',
-                    usuario: usuarioActualizado
-                });
-            })
+        borraArchivo(usuarioDB.img, 'usuarios')
+
+        usuarioDB.img = nombreArchivo;
+
+        usuarioDB.save((err, usuarioGuardado) => {
+
+            res.json({
+                ok: true,
+                usuario: usuarioGuardado,
+                img: nombreArchivo
+            });
+
         });
 
-    }
 
-    if (tipo === 'articulos') {
+    });
 
-        Articulo.findById(id, (err, articulo) => {
-            let pathViejo = './uploads/articulos/' + articulo.img;
 
-            // Si existe, elimina la imagen anterior
-            if (fs.existsSync(pathViejo)) {
-                fs.unlink(pathViejo);
-            }
+}
 
-            articulo.img = nombreArchivo;
 
-            articulo.save((err, articuloActualizado) => {
-                return res.status(200).json({
-                    ok: true,
-                    mensaje: 'Imagen de articulo actualizado',
-                    articulo: articuloActualizado
-                });
-            })
+
+function imagenArticulo(id, res, nombreArchivo) {
+
+    Articulo.findById(id, (err, articuloDB) => {
+
+        if (err) {
+            borraArchivo(nombreArchivo, 'articulos');
+
+            return res.status(500).json({
+                ok: false,
+                err
+            });
+        }
+
+        if (!articuloDB) {
+
+            borraArchivo(nombreArchivo, 'articulos');
+
+            return res.status(400).json({
+                ok: false,
+                err: {
+                    message: 'Articulo no existe'
+                }
+            });
+        }
+
+        borraArchivo(articuloDB.img, 'articulos')
+
+        articuloDB.img = nombreArchivo;
+
+        articuloDB.save((err, articuloGuardado) => {
+
+            res.json({
+                ok: true,
+                articulo: articuloGuardado,
+                img: nombreArchivo
+            });
+
         });
 
+
+    });
+
+
+}
+
+
+
+function borraArchivo(nombreImagen, tipo) {
+
+    let pathImagen = path.resolve(__dirname, `../../uploads/${ tipo }/${ nombreImagen }`);
+    if (fs.existsSync(pathImagen)) {
+        fs.unlinkSync(pathImagen);
     }
+
 
 }
 
