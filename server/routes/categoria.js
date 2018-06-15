@@ -45,7 +45,7 @@ app.get('/categoria/:id', (req, res) => {
     let id = req.params.id;
 
     Categoria.findById(id)
-        .exec((err, hospital) => {
+        .exec((err, categoria) => {
             if (err) {
                 return res.status(500).json({
                     ok: false,
@@ -54,7 +54,7 @@ app.get('/categoria/:id', (req, res) => {
                 });
             }
 
-            if (!hospital) {
+            if (!categoria) {
                 return res.status(400).json({
                     ok: false,
                     mensaje: 'Categoria con el id ' + id + 'no existe',
@@ -63,7 +63,7 @@ app.get('/categoria/:id', (req, res) => {
             }
             res.status(200).json({
                 ok: true,
-                hospital: hospital
+                categoria: categoria
             });
         })
 })

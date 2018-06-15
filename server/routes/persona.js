@@ -39,6 +39,38 @@ app.get('/persona', (req, res, next) => {
             });
 });
 
+
+// ==========================================
+//  Obtener Persona por ID
+// ==========================================
+app.get('/persona/:id', (req, res) => {
+
+    let id = req.params.id;
+
+    Persona.findById(id)
+        .exec((err, persona) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar persona',
+                    errors: err
+                });
+            }
+
+            if (!persona) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'Persona con el id ' + id + 'no existe',
+                    errors: { message: 'No existe un persona con ese ID' }
+                });
+            }
+            res.status(200).json({
+                ok: true,
+                persona: persona
+            });
+        })
+})
+
 // ==========================================
 // Actualizar persona
 // ==========================================
