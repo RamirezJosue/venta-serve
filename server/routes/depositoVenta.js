@@ -109,7 +109,7 @@ app.post('/depositoVenta', mdAutenticacion.verificaToken, (req, res) => {
         tipoDeposito: body.tipoDeposito,
         cuentaDeposito: body.cuentaDeposito,
         fechaHora: body.fechaHora,
-        venta: body.tipoIgv,
+        venta: body.venta,
         usuario: req.usuario._id
     });
 
