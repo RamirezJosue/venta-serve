@@ -76,6 +76,10 @@ app.put('/venta/:id', mdAutenticacion.verificaToken, (req, res) => {
         venta.numComprobante = body.numComprobante;
         venta.impuesto = body.impuesto;
         venta.totalVenta = body.totalVenta;
+        venta.cuentaCliente = body.cuentaCliente;
+        venta.cuentaIgv = body.cuentaIgv;
+        venta.tipoVenta = body.tipoVenta;
+        venta.plazo = body.plazo;
         venta.estado = body.estado;
 
 
@@ -117,6 +121,10 @@ app.post('/venta', mdAutenticacion.verificaToken, (req, res) => {
         fechaHora: body.fechaHora,
         impuesto: body.impuesto,
         totalVenta: body.totalVenta,
+        cuentaCliente: body.cuentaCliente,
+        cuentaIgv: body.cuentaIgv,
+        tipoVenta: body.tipoVenta,
+        plazo: body.plazo,
         estado: body.estado,
         usuario: req.usuario._id,
         cliente: body.cliente
