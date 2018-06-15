@@ -69,7 +69,7 @@ app.put('/detalleIngreso/:id', mdAutenticacion.verificaToken, (req, res) => {
 
 
         detalleIngreso.cantidad = body.cantidad;
-        detalleIngreso.precioVenta = body.precioVenta;
+        detalleIngreso.precioCompra = body.precioCompra;
         detalleIngreso.descuento = body.descuento;
 
         detalleIngreso.save((err, detalleIngresoGuardado) => {
@@ -106,7 +106,7 @@ app.post('/detalleIngreso', mdAutenticacion.verificaToken, (req, res) => {
     let detalleIngreso = new DetalleIngreso({
         cantidad: body.cantidad,
         precioVenta: body.precioVenta,
-        descuento: body.descuento,
+        precioCompra: body.precioCompra,
         articulo: body.articulo,
         ingreso: body.ingreso
     });
