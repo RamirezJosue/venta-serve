@@ -38,6 +38,44 @@ app.get('/articulo', (req, res, next) => {
             });
 });
 
+
+// ==========================================
+// Obtener articulo por ID
+// ==========================================
+app.get('/articulo/:id', (req, res) => {
+
+    var id = req.params.id;
+
+    Articulo.findById(id)
+        .populate('categoria', 'nombre')
+        .exec((err, articulo) => {
+
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar articulo',
+                    errors: err
+                });
+            }
+
+            if (!articulo) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'El articulo con el id ' + id + ' no existe',
+                    errors: { message: 'No existe un articulo con ese ID' }
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                articulo: articulo
+            });
+
+        })
+
+
+});
+
 // ==========================================
 // Actualizar articulo
 // ==========================================

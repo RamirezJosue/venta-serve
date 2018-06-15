@@ -39,6 +39,45 @@ app.get('/detalleIngreso', (req, res, next) => {
             });
 });
 
+// ==========================================
+// Obtener detalleIngreso po Id
+// ==========================================
+app.get('/detalleIngreso/:id', (req, res) => {
+
+    var id = req.params.id;
+
+    DetalleIngreso.findById(id)
+        .populate('articulo', 'nombre')
+        .populate('ingreso', 'fechaHora')
+        .exec((err, detalleIngreso) => {
+
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar detalleIngreso',
+                    errors: err
+                });
+            }
+
+            if (!detalleIngreso) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'El detalleIngreso con el id ' + id + ' no existe',
+                    errors: { message: 'No existe un detalleIngreso con ese ID' }
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                detalleIngreso: detalleIngreso
+            });
+
+        })
+
+
+});
+
+
 
 // ==========================================
 // Actualizar detalleIngreso

@@ -42,6 +42,44 @@ app.get('/venta', (req, res, next) => {
             });
 });
 
+// ==========================================
+// Obtener Venta por Id
+// ==========================================
+app.get('/venta/:id', (req, res) => {
+
+    var id = req.params.id;
+
+    Venta.findById(id)
+        .populate('cliente', 'nombre')
+        .exec((err, venta) => {
+
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar venta',
+                    errors: err
+                });
+            }
+
+            if (!venta) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'El venta con el id ' + id + ' no existe',
+                    errors: { message: 'No existe un venta con ese ID' }
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                venta: venta
+            });
+
+        })
+
+
+});
+
+
 
 // ==========================================
 // Actualizar venta

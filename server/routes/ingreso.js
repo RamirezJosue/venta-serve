@@ -24,7 +24,7 @@ app.get('/ingreso', (req, res, next) => {
                 if (err) {
                     return res.status(500).json({
                         ok: false,
-                        mensaje: 'Error cargando persona',
+                        mensaje: 'Error cargando Ingreso',
                         errors: err
                     });
                 }
@@ -39,6 +39,39 @@ app.get('/ingreso', (req, res, next) => {
 
             });
 });
+
+// ==========================================
+//  Obtener Ingreso por ID
+// ==========================================
+app.get('/ingreso/:id', (req, res) => {
+
+    let id = req.params.id;
+
+    Ingreso.findById(id)
+        .populate('proveedor')
+        .populate('usuario', 'nombre')
+        .exec((err, ingreso) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar ingreso',
+                    errors: err
+                });
+            }
+
+            if (!ingreso) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'Ingreso con el id ' + id + 'no existe',
+                    errors: { message: 'No existe un ingreso con ese ID' }
+                });
+            }
+            res.status(200).json({
+                ok: true,
+                ingreso: ingreso
+            });
+        })
+})
 
 // ==========================================
 // Actualizar ingreso

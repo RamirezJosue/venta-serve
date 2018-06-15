@@ -39,6 +39,46 @@ app.get('/depositoVenta', (req, res, next) => {
             });
 });
 
+// ==========================================
+// Obtener depositoVenta por Id
+// ==========================================
+app.get('/depositoVenta/:id', (req, res) => {
+
+    var id = req.params.id;
+
+    DepositoVenta.findById(id)
+        .populate('compra', 'numComprobante')
+        .populate('usuario', 'nombre')
+        .exec((err, depositoVenta) => {
+
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar depositoVenta',
+                    errors: err
+                });
+            }
+
+            if (!depositoVenta) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'El depositoVenta con el id ' + id + ' no existe',
+                    errors: { message: 'No existe un depositoVenta con ese ID' }
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                depositoVenta: depositoVenta
+            });
+
+        })
+
+
+});
+
+
+
 
 // ==========================================
 // Actualizar depositoVenta

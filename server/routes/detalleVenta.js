@@ -41,6 +41,44 @@ app.get('/detalleVenta', (req, res, next) => {
 
 
 // ==========================================
+// Obtener detalleVenta po Id
+// ==========================================
+app.get('/detalleVenta/:id', (req, res) => {
+
+    var id = req.params.id;
+
+    DetalleVenta.findById(id)
+        .populate('articulo', 'nombre')
+        .populate('venta', 'fechaHora')
+        .exec((err, detalleVenta) => {
+
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar detalleVenta',
+                    errors: err
+                });
+            }
+
+            if (!detalleVenta) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'El detalleVenta con el id ' + id + ' no existe',
+                    errors: { message: 'No existe un detalleVenta con ese ID' }
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                detalleVenta: detalleVenta
+            });
+
+        })
+
+
+});
+
+// ==========================================
 // Actualizar detalleVenta
 // ==========================================
 app.put('/detalleVenta/:id', mdAutenticacion.verificaToken, (req, res) => {

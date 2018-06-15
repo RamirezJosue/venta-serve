@@ -41,6 +41,46 @@ app.get('/depositoCompra', (req, res, next) => {
 
 
 // ==========================================
+// Obtener depositoCompra por Id
+// ==========================================
+app.get('/depositoCompra/:id', (req, res) => {
+
+    var id = req.params.id;
+
+    DepositoCompra.findById(id)
+        .populate('compra', 'numComprobante')
+        .populate('usuario', 'nombre')
+        .exec((err, depositoCompra) => {
+
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar depositoCompra',
+                    errors: err
+                });
+            }
+
+            if (!depositoCompra) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'El depositoCompra con el id ' + id + ' no existe',
+                    errors: { message: 'No existe un depositoCompra con ese ID' }
+                });
+            }
+
+            res.status(200).json({
+                ok: true,
+                depositoCompra: depositoCompra
+            });
+
+        })
+
+
+});
+
+
+
+// ==========================================
 // Actualizar depositoCompra
 // ==========================================
 app.put('/depositoCompra/:id', mdAutenticacion.verificaToken, (req, res) => {
