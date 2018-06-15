@@ -62,8 +62,8 @@ app.put('/detalleVenta/:id', mdAutenticacion.verificaToken, (req, res) => {
         if (!detalleVenta) {
             return res.status(400).json({
                 ok: false,
-                mensaje: 'El detalleVenta con el id ' + id + ' no existe',
-                errors: { message: 'No existe un detalleVenta con ese ID' }
+                mensaje: 'El detalle venta con el id ' + id + ' no existe',
+                errors: { message: 'No existe un detalle venta con ese ID' }
             });
         }
 
@@ -71,6 +71,9 @@ app.put('/detalleVenta/:id', mdAutenticacion.verificaToken, (req, res) => {
         detalleVenta.cantidad = body.cantidad;
         detalleVenta.precioVenta = body.precioVenta;
         detalleVenta.descuento = body.descuento;
+        detalleVenta.cuentaVenta = body.cuentaVenta;
+        detalleVenta.tipoIgv = body.tipoIgv;
+        detalleVenta.igv = body.igv;
 
         detalleVenta.save((err, detalleVentaGuardado) => {
 
@@ -107,6 +110,9 @@ app.post('/detalleVenta', mdAutenticacion.verificaToken, (req, res) => {
         cantidad: body.cantidad,
         precioVenta: body.precioVenta,
         descuento: body.descuento,
+        cuentaVenta: body.cuentaVenta,
+        tipoIgv: body.tipoIgv,
+        igv: body.igv,
         venta: body.venta,
         articulo: body.articulo
     });
