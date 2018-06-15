@@ -9,7 +9,7 @@ let Categoria = require('../models/categoria');
 // ==========================================
 // Obtener todo Categoria
 // ==========================================
-app.get('/categoria', (req, res, next) => {
+app.get('/categoria', mdAutenticacion.verificaToken, (req, res, next) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);

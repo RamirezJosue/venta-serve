@@ -9,7 +9,7 @@ let Articulo = require('../models/articulo');
 // ==========================================
 // Obtener todos los articulos
 // ==========================================
-app.get('/articulo', (req, res, next) => {
+app.get('/articulo', mdAutenticacion.verificaToken, (req, res, next) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);

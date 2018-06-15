@@ -9,7 +9,7 @@ let Ingreso = require('../models/ingreso');
 // ==========================================
 // Obtener todos los ingresos
 // ==========================================
-app.get('/ingreso', (req, res, next) => {
+app.get('/ingreso', mdAutenticacion.verificaToken, (req, res, next) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);

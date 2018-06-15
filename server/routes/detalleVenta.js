@@ -9,7 +9,7 @@ let DetalleVenta = require('../models/detalleVenta');
 // ==========================================
 // Obtener todo DetalleVenta
 // ==========================================
-app.get('/detalleVenta', (req, res, next) => {
+app.get('/detalleVenta', mdAutenticacion.verificaToken, (req, res, next) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
