@@ -37,6 +37,37 @@ app.get('/categoria', (req, res, next) => {
             });
 });
 
+// ==========================================
+//  Obtener Categoria por ID
+// ==========================================
+app.get('/categoria/:id', (req, res) => {
+
+    let id = req.params.id;
+
+    Categoria.findById(id)
+        .exec((err, hospital) => {
+            if (err) {
+                return res.status(500).json({
+                    ok: false,
+                    mensaje: 'Error al buscar categoria',
+                    errors: err
+                });
+            }
+
+            if (!hospital) {
+                return res.status(400).json({
+                    ok: false,
+                    mensaje: 'Categoria con el id ' + id + 'no existe',
+                    errors: { message: 'No existe un categoria con ese ID' }
+                });
+            }
+            res.status(200).json({
+                ok: true,
+                hospital: hospital
+            });
+        })
+})
+
 
 // ==========================================
 // Actualizar categoria
