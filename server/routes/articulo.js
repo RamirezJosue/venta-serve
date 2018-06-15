@@ -69,6 +69,7 @@ app.put('/articulo/:id', mdAutenticacion.verificaToken, (req, res) => {
         articulo.codigo = body.codigo;
         articulo.nombre = body.nombre;
         articulo.stock = body.stock;
+        articulo.tipoIgv = body.tipoIgv;
         articulo.descripcion = body.descripcion;
 
 
@@ -107,6 +108,7 @@ app.post('/articulo', mdAutenticacion.verificaToken, (req, res) => {
         codigo: body.codigo,
         nombre: body.nombre,
         stock: body.stock,
+        tipoIgv: body.tipoIgv,
         descripcion: body.descripcion,
         condicion: body.condicion,
         categoria: body.categoria
