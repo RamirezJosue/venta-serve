@@ -10,7 +10,7 @@ let Persona = require('../models/persona');
 // Obtener todos los personas
 // ==========================================
 
-app.get('/persona', mdAutenticacion.verificaToken, (req, res, next) => {
+app.get('/persona', (req, res, next) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);

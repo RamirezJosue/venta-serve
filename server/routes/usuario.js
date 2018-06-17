@@ -11,7 +11,7 @@ const Usuario = require('../models/usuario');
 // ==========================================
 // Obtener todos los usuarios
 // ==========================================
-app.get('/usuario', mdAutenticacion.verificaToken, (req, res, next) => {
+app.get('/usuario', (req, res, next) => {
 
 
     let desde = req.query.desde || 0;

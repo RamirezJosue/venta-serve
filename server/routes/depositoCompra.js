@@ -9,7 +9,7 @@ let DepositoCompra = require('../models/depositoCompra');
 // ==========================================
 // Obtener todo DepositoCompra
 // ==========================================
-app.get('/depositoCompra', mdAutenticacion.verificaToken, (req, res, next) => {
+app.get('/depositoCompra', (req, res, next) => {
 
     let desde = req.query.desde || 0;
     desde = Number(desde);
