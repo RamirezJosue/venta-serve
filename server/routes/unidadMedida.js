@@ -14,7 +14,7 @@ app.get('/unidadMedida', (req, res, next) => {
     let desde = req.query.desde || 0;
     desde = Number(desde);
 
-    Categoria.find({})
+    UnidadMedida.find({})
         .skip(desde)
         .limit(5)
         .exec(
