@@ -18,7 +18,7 @@ app.get('/venta', (req, res, next) => {
         .skip(desde)
         .limit(5)
         .populate('usuario', 'nombre')
-        .populate('cliente')
+        .populate('persona')
         .exec(
             (err, ventas) => {
                 if (err) {
@@ -50,7 +50,7 @@ app.get('/venta/:id', (req, res) => {
     var id = req.params.id;
 
     Venta.findById(id)
-        .populate('cliente', 'nombre')
+        .populate('persona', 'nombre')
         .exec((err, venta) => {
 
             if (err) {
@@ -165,7 +165,7 @@ app.post('/venta', mdAutenticacion.verificaToken, (req, res) => {
         plazo: body.plazo,
         estado: body.estado,
         usuario: req.usuario._id,
-        cliente: body.cliente
+        persona: body.persona
     });
 
     venta.save((err, ventaGuardado) => {

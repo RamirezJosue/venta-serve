@@ -15,6 +15,6 @@ let ventaSchema = new Schema({
     plazo: { type: String, required: false },
     estado: { type: Boolean, default: true },
     usuario: { type: Schema.Types.ObjectId, ref: 'Usuario', required: true },
-    cliente: { type: Schema.Types.ObjectId, ref: 'Persona', required: [true, 'El	id	persona	es	un	campo	obligatorio'] }
+    persona: { type: Schema.Types.ObjectId, ref: 'Persona', required: [true, 'El	id	persona	es	un	campo	obligatorio'] }
 });
 module.exports = mongoose.model('Venta', ventaSchema);
