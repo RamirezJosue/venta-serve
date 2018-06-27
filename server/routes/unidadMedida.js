@@ -7,7 +7,7 @@ let app = express();
 let Unidadmedida = require('../models/unidadmedida');
 
 // ==========================================
-// Obtener todo Unidad de Medida
+// Obtener todo unidadmedida
 // ==========================================
 app.get('/unidadmedida', (req, res, next) => {
 
@@ -38,7 +38,7 @@ app.get('/unidadmedida', (req, res, next) => {
 });
 
 // ==========================================
-//  Mostrar Unidad de Medidad por ID
+//  Obtener unidadmedida por ID
 // ==========================================
 app.get('/unidadmedida/:id', (req, res) => {
 
@@ -49,7 +49,7 @@ app.get('/unidadmedida/:id', (req, res) => {
             if (err) {
                 return res.status(500).json({
                     ok: false,
-                    mensaje: 'Error al buscar unidadmedida',
+                    mensaje: 'Error al buscar unidad medida',
                     errors: err
                 });
             }
@@ -57,8 +57,8 @@ app.get('/unidadmedida/:id', (req, res) => {
             if (!unidadmedida) {
                 return res.status(400).json({
                     ok: false,
-                    mensaje: 'Unidadmedida con el id ' + id + 'no existe',
-                    errors: { message: 'No existe un unidadmedida con ese ID' }
+                    mensaje: 'Unidad nedida con el id ' + id + 'no existe',
+                    errors: { message: 'No existe un unidad medida con ese ID' }
                 });
             }
             res.status(200).json({
@@ -70,7 +70,7 @@ app.get('/unidadmedida/:id', (req, res) => {
 
 
 // ==========================================
-// Actualizar unidad de medida
+// Actualizar unidadmedida
 // ==========================================
 app.put('/unidadmedida/:id', mdAutenticacion.verificaToken, (req, res) => {
 
@@ -98,7 +98,7 @@ app.put('/unidadmedida/:id', mdAutenticacion.verificaToken, (req, res) => {
 
 
         unidadmedida.nombre = body.nombre;
-        unidadmedida.prefijo = body.prefijo;
+        unidadmedida.descripcion = body.descripcion;
 
         unidadmedida.save((err, unidadmedidaGuardado) => {
 
@@ -125,7 +125,7 @@ app.put('/unidadmedida/:id', mdAutenticacion.verificaToken, (req, res) => {
 
 
 // ==========================================
-// Crear nueva unidad de medida
+// Crear un nuevo unidadmedida
 // ==========================================
 app.post('/unidadmedida', mdAutenticacion.verificaToken, (req, res) => {
 
@@ -133,7 +133,7 @@ app.post('/unidadmedida', mdAutenticacion.verificaToken, (req, res) => {
 
     let unidadmedida = new Unidadmedida({
         nombre: body.nombre,
-        prefijo: body.prefijo
+        descripcion: body.descripcion
     });
 
     unidadmedida.save((err, unidadmedidaGuardado) => {
@@ -158,9 +158,9 @@ app.post('/unidadmedida', mdAutenticacion.verificaToken, (req, res) => {
 
 
 // ============================================
-//   Borrar unidad de medida por el id
+//   Borrar uindadmedida por el id
 // ============================================
-app.delete('/unidadmedida/:id', mdAutenticacion.verificaToken, (req, res) => {
+app.delete('/uindadmedida/:id', mdAutenticacion.verificaToken, (req, res) => {
 
     let id = req.params.id;
 

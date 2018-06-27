@@ -10,6 +10,7 @@ let articuloSchema = new Schema({
     descripcion: { type: String, required: false },
     img: { type: String, required: false },
     condicion: { type: Boolean, required: true, default: false },
-    categoria: { type: Schema.Types.ObjectId, ref: 'Categoria', required: true }
+    categoria: { type: Schema.Types.ObjectId, ref: 'Categoria', required: true },
+    unidadmedida: { type: Schema.Types.ObjectId, ref: 'Unidadmedida', required: true }
 });
 module.exports = mongoose.model('Articulo', articuloSchema);

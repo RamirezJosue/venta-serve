@@ -6,6 +6,7 @@ app.use(require('./usuario'));
 app.use(require('./persona'));
 app.use(require('./categoria'));
 app.use(require('./articulo'));
+app.use(require('./unidadmedida'));
 app.use(require('./venta'));
 app.use(require('./ingreso'));
 app.use(require('./detalleVenta'));
@@ -16,7 +17,6 @@ app.use(require('./busqueda'));
 app.use(require('./upload'));
 app.use(require('./imagenes'));
 app.use(require('./login'));
-app.use(require('./unidadmedida'));
 
 
 

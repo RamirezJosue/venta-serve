@@ -18,6 +18,7 @@ app.get('/articulo', (req, res, next) => {
         .skip(desde)
         .limit(5)
         .populate('categoria')
+        .populate('unidadmedida')
         .exec(
             (err, articulos) => {
                 if (err) {
@@ -48,6 +49,7 @@ app.get('/articulo/:id', (req, res) => {
 
     Articulo.findById(id)
         .populate('categoria', 'nombre')
+        .populate('unidadmedida', 'nombre')
         .exec((err, articulo) => {
 
             if (err) {
@@ -149,7 +151,8 @@ app.post('/articulo', mdAutenticacion.verificaToken, (req, res) => {
         tipoIgv: body.tipoIgv,
         descripcion: body.descripcion,
         condicion: body.condicion,
-        categoria: body.categoria
+        categoria: body.categoria,
+        unidadmedida: body.unidadmedida
     });
 
     articulo.save((err, articuloGuardado) => {
